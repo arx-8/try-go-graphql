@@ -1,4 +1,4 @@
-package graph
+package graphql
 
 // This file will be automatically regenerated based on the schema, any resolver implementations
 // will be copied through when generating and any unknown code will be moved to the end.
@@ -7,8 +7,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/arx-8/try-go-graphql/graph/generated"
-	"github.com/arx-8/try-go-graphql/graph/model"
+	"github.com/arx-8/try-go-graphql/src/graphql/generated"
+	"github.com/arx-8/try-go-graphql/src/graphql/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {

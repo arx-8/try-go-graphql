@@ -1,6 +1,6 @@
 .PHONY: start
 start:
-	go run server.go
+	go run src/server.go
 
 .PHONY: gqlgen-generate
 gqlgen-generate:
