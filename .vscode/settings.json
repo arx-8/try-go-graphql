@@ -12,5 +12,8 @@
     "plantuml.exportFormat": "png",
     "plantuml.exportOutDir": ".",
     "plantuml.exportSubFolder": false,
-    "cSpell.words": []
+    "cSpell.words": [
+        "gorm",
+        "todos"
+    ]
 }

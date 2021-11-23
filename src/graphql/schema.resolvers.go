@@ -11,11 +11,19 @@ import (
 	"github.com/arx-8/try-go-graphql/src/graphql/model"
 )
 
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
