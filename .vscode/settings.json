@@ -1,0 +1,16 @@
+{
+    "editor.formatOnSave": true,
+    /**
+     * Project specific settings
+     */
+    "files.associations": {
+        ".env.*": "dotenv"
+    },
+    /**
+     * Extensions
+     */
+    "plantuml.exportFormat": "png",
+    "plantuml.exportOutDir": ".",
+    "plantuml.exportSubFolder": false,
+    "cSpell.words": []
+}
