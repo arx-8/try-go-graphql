@@ -8,13 +8,14 @@ type NewTodo struct {
 }
 
 type NewUser struct {
-	Name string `json:"Name"`
+	Name string `json:"name"`
 }
 
 type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
+	ID     string `json:"id"`
+	Text   string `json:"text"`
+	Done   bool   `json:"done"`
+	UserID string `json:"userID"`
 }
 
 type User struct {

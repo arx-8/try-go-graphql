@@ -16,8 +16,9 @@ type Todo struct {
 
 func NewTodoFromEntity(e *entity.Todo) *model.Todo {
 	return &model.Todo{
-		ID:   fmt.Sprintf("%d", e.ID),
-		Text: e.Text,
-		Done: e.Done,
+		ID:     fmt.Sprintf("%d", e.ID),
+		Text:   e.Text,
+		Done:   e.Done,
+		UserID: fmt.Sprintf("%d", e.UserID),
 	}
 }
