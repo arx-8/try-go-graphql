@@ -15,4 +15,4 @@
 # vendor/
 
 # temp files
-src/test.db
+test.db

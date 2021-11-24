@@ -8,8 +8,8 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/arx-8/try-go-graphql/src/external"
-	"github.com/arx-8/try-go-graphql/src/graphql"
 	"github.com/arx-8/try-go-graphql/src/graphql/generated"
+	"github.com/arx-8/try-go-graphql/src/graphql/resolver"
 )
 
 const defaultPort = "8080"
@@ -28,7 +28,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(
 		generated.NewExecutableSchema(generated.Config{
-			Resolvers: &graphql.Resolver{
+			Resolvers: &resolver.Resolver{
 				DB: db,
 			},
 		}),

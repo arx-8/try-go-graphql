@@ -1,0 +1,9 @@
+scalar Void
+
+type Query {
+  _noop(id: Void): Void
+}
+
+type Mutation {
+  _noop(input: Void): Void
+}
