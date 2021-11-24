@@ -7,17 +7,16 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/arx-8/try-go-graphql/src/entity"
-	"github.com/arx-8/try-go-graphql/src/gorm_model"
-	"github.com/arx-8/try-go-graphql/src/graphql/model"
+	"github.com/arx-8/try-go-graphql/src/graphql/gql_model"
+	"github.com/arx-8/try-go-graphql/src/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, input gql_model.NewTodo) (*gql_model.Todo, error) {
 	userID, err := strconv.Atoi(input.UserID)
 	if err != nil {
 		return nil, err
 	}
-	record := entity.Todo{
+	record := model.Todo{
 		Text:   input.Text,
 		UserID: uint(userID),
 	}
@@ -25,23 +24,24 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 		return nil, err
 	}
 
-	res := gorm_model.NewTodoFromEntity(&record)
-	return res, nil
+	res := record.ToGqlModel()
+	return &res, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context, userID string) ([]*model.Todo, error) {
+func (r *queryResolver) Todos(ctx context.Context, userID string) ([]*gql_model.Todo, error) {
 	userID_, err := strconv.Atoi(userID)
 	if err != nil {
 		return nil, err
 	}
-	var records []entity.Todo
+	var records []model.Todo
 	if err := r.DB.Where("user_id", userID_).Find(&records).Error; err != nil {
 		return nil, err
 	}
 
-	todos := []*model.Todo{}
+	todos := []*gql_model.Todo{}
 	for _, record := range records {
-		todos = append(todos, gorm_model.NewTodoFromEntity(&record))
+		g := record.ToGqlModel()
+		todos = append(todos, &g)
 	}
 
 	return todos, nil

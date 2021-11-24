@@ -5,38 +5,34 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 
-	"github.com/arx-8/try-go-graphql/src/entity"
-	"github.com/arx-8/try-go-graphql/src/gorm_model"
-	"github.com/arx-8/try-go-graphql/src/graphql/model"
+	"github.com/arx-8/try-go-graphql/src/graphql/gql_model"
+	"github.com/arx-8/try-go-graphql/src/model"
 )
 
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	record := entity.User{
+func (r *mutationResolver) CreateUser(ctx context.Context, input gql_model.NewUser) (*gql_model.User, error) {
+	record := model.User{
 		Name: input.Name,
 	}
 	if err := r.DB.Create(&record).Error; err != nil {
 		return nil, err
 	}
 
-	res := gorm_model.NewUserFromEntity(&record)
-
-	return res, nil
+	res := record.ToGqlModel()
+	return &res, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
+func (r *queryResolver) User(ctx context.Context, id string) (*gql_model.User, error) {
 	idn, err := strconv.Atoi(id)
 	if err != nil {
 		return nil, err
 	}
-	var u entity.User
+	var u model.User
 	if err := r.DB.Find(&u, idn).Error; err != nil {
 		return nil, err
 	}
-	return &model.User{
-		ID:   fmt.Sprintf("%d", u.ID),
-		Name: u.Name,
-	}, nil
+
+	res := u.ToGqlModel()
+	return &res, nil
 }

@@ -1,7 +1,7 @@
 package external
 
 import (
-	"github.com/arx-8/try-go-graphql/src/entity"
+	"github.com/arx-8/try-go-graphql/src/model"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -12,7 +12,7 @@ func ConnectDatabase() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	err = db.AutoMigrate(&entity.User{}, &entity.Todo{})
+	err = db.AutoMigrate(&model.User{}, &model.Todo{})
 	if err != nil {
 		return nil, err
 	}
