@@ -1,0 +1,70 @@
+@startuml development_flow_with_gqlgen
+title Development flow with `gqlgen` (Go library for GraphQL code generator)
+
+' @see https://github.com/tupadr3/plantuml-icon-font-sprites/tree/v2.4.0
+!includeurl https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/common.puml
+!includeurl https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/devicons/go.puml
+!includeurl https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/devicons2/graphql_wordmark.puml
+!includeurl https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/material/settings.puml
+!includeurl https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/govicons/script.puml
+
+' @see https://github.com/Roemer/plantuml-office/tree/1.0.0
+!includeurl https://raw.githubusercontent.com/Roemer/plantuml-office/1.0.0/office2014/Clouds/cloud.puml
+!includeurl https://raw.githubusercontent.com/Roemer/plantuml-office/1.0.0/office2014/Concepts/application_generic.puml
+!includeurl https://raw.githubusercontent.com/Roemer/plantuml-office/1.0.0/office2014/Concepts/document.puml
+!includeurl https://raw.githubusercontent.com/Roemer/plantuml-office/1.0.0/office2014/Servers/web_server.puml
+
+' 他UMLのキーワードを使用可能にするための設定
+allow_mixing
+
+' '''''''''''''''
+' Declare object
+' '''''''''''''''
+actor developer
+
+DEV_GO(gqlgen_go_file, "github.com/99designs/gqlgen") #APPLICATION
+
+package "Project" {
+    MATERIAL_SETTINGS(gqlgen_yml_file, "gqlgen.yml")
+
+    package "graphql/" {
+        DEV2_GRAPHQL_WORDMARK(schema_graphql_file, "./schema.graphql") #LightPink
+        DEV_GO(resolver_go_file, "./resolver.go") #APPLICATION
+        DEV_GO(generated_go_file, "./generated.go") #APPLICATION
+        DEV_GO(gql_model_go_file, "./gql_model.go") #APPLICATION
+    }
+}
+
+' ''''''''''
+' Data flow
+' ''''''''''
+left to right direction
+
+
+legend
+＃ Development flow
+
+<color:#Black><b>0.</b> Write settings</color>: Write the settings for `gqlgen`. (Usually only once.)
+<color:#Red><b>1.</b> Write schema</color>: Write GraphQL schema. (When add/fix features, start from here.)
+<color:#Blue><b>2.</b> Generate</color>: Generate *.go code.
+<color:#Green><b>3.</b> Develop</color>: Implement the process in `resolver.go`. (`resolver` in GraphQL is like `handler` in Gin.)
+end legend
+
+' 0. write settings
+developer -[#Black,bold]> gqlgen_yml_file: <color:#Black><b>0.</b> Write settings</color>
+
+' 1. write schema
+developer -[#Red,bold]-> schema_graphql_file: <color:#Red><b>1.</b> Write GraphQL schema</color>
+
+' 2. generate
+developer -[#Blue,bold]-> gqlgen_go_file: <color:#Blue><b>2.</b> go run</color>
+gqlgen_go_file <-[#Blue,bold]- gqlgen_yml_file: <color:#Blue><b>2.</b> Read settings</color>
+gqlgen_go_file <-[#Blue,bold]- schema_graphql_file: <color:#Blue><b>2.</b> Read schema</color>
+gqlgen_go_file -[#Blue,bold]-> resolver_go_file: <color:#Blue><b>2.</b> Generate</color>
+gqlgen_go_file -[#Blue,bold]-> generated_go_file: <color:#Blue><b>2.</b> Generate</color>
+gqlgen_go_file -[#Blue,bold]-> gql_model_go_file: <color:#Blue><b>2.</b> Generate</color>
+
+' 3. develop
+developer -[#Green,bold]-> resolver_go_file: <color:#Green><b>3.</b> Develop</color>
+
+@enduml
