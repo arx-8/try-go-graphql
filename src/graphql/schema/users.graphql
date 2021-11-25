@@ -13,5 +13,5 @@ type User {
 }
 
 input NewUser {
-  name: String!
+  name: String! @binding(constraint: "required,min=3,max=5")
 }

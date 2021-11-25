@@ -8,6 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/arx-8/try-go-graphql/src/external"
+	"github.com/arx-8/try-go-graphql/src/graphql/directive"
 	"github.com/arx-8/try-go-graphql/src/graphql/generated"
 	"github.com/arx-8/try-go-graphql/src/graphql/resolver"
 )
@@ -30,6 +31,9 @@ func main() {
 		generated.NewExecutableSchema(generated.Config{
 			Resolvers: &resolver.Resolver{
 				DB: db,
+			},
+			Directives: generated.DirectiveRoot{
+				Binding: directive.Binding,
 			},
 		}),
 	)

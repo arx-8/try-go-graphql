@@ -1,3 +1,9 @@
+directive @binding(
+  # You can use go-playground/validator rules
+  # See https://github.com/go-playground/validator
+  constraint: String!
+) on INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
+
 scalar Void
 
 type Query {
